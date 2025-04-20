@@ -1,0 +1,6 @@
+interview\bank\transfermoneyapi\controllers\AccountControllerIT.class
+interview\bank\transfermoneyapi\services\implementation\AccountServiceImplementationTest.class
+interview\bank\transfermoneyapi\controllers\TransactionControllerIT.class
+interview\bank\transfermoneyapi\TransferMoneyApiApplicationTests.class
+interview\bank\transfermoneyapi\DataInputTest.class
+interview\bank\transfermoneyapi\services\implementation\TransactionServiceImplementationTest.class
