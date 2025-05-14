@@ -1,6 +1,7 @@
 package bank.money.transfer.db.domain.dto;
 
 
+import bank.money.transfer.util.Currency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,6 @@ public class Account {
 
     private Long id;
     private BigDecimal balance;
-    private String currency;
+    private Currency currency;
     private LocalDateTime createdAt;
 }

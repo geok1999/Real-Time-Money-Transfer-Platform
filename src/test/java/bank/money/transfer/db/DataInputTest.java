@@ -3,6 +3,7 @@ package bank.money.transfer.db;
 import bank.money.transfer.db.domain.dto.Account;
 import bank.money.transfer.db.domain.dto.Transaction;
 import bank.money.transfer.db.domain.entities.AccountEntity;
+import bank.money.transfer.util.Currency;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ public final class DataInputTest {
         return Account.builder()
                 .id(1L)
                 .balance(new BigDecimal("2345.67"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
     }
@@ -25,12 +26,12 @@ public final class DataInputTest {
         return AccountEntity.builder()
                 .id(1L)
                 .balance(new BigDecimal("2345.67"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
     }
 
-    public static Transaction transactionTest(Long sourceAccountId, Long targetAccountId, BigDecimal amount, String currency) {
+    public static Transaction transactionTest(Long sourceAccountId, Long targetAccountId, BigDecimal amount, Currency currency) {
         return Transaction.builder()
                 .sourceAccountId(sourceAccountId)
                 .targetAccountId(targetAccountId)

@@ -6,6 +6,7 @@ import bank.money.transfer.db.domain.dto.Transaction;
 import bank.money.transfer.db.domain.entities.TransactionEntity;
 import bank.money.transfer.db.repositories.TransactionRepository;
 import bank.money.transfer.db.services.AccountService;
+import bank.money.transfer.util.Currency;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,19 +39,19 @@ public class TransactionServiceImplementationTest {
         Account sourceAccount = Account.builder()
                 .id(1L)
                 .balance(new BigDecimal("100.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
         Account targetAccount = Account.builder()
                 .id(2L)
                 .balance(new BigDecimal("50.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T13:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
 
-        final Transaction transaction =transactionTest(1L,2L,new BigDecimal("60.0"),"USD");
+        final Transaction transaction =transactionTest(1L,2L,new BigDecimal("60.0"),Currency.USD);
 
         when(accountService.findById(eq(sourceAccount.getId()))).thenReturn(Optional.of(sourceAccount));
         when(accountService.findById(eq(targetAccount.getId()))).thenReturn(Optional.of(targetAccount));
@@ -70,11 +71,11 @@ public class TransactionServiceImplementationTest {
         Account sourceAccount = Account.builder()
                 .id(1L)
                 .balance(new BigDecimal("100.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
-        final Transaction transaction =transactionTest(1L,2L,new BigDecimal("60.0"),"USD");
+        final Transaction transaction =transactionTest(1L,2L,new BigDecimal("60.0"),Currency.USD);
         when(accountService.findById(eq(sourceAccount.getId()))).thenReturn(Optional.of(sourceAccount));
         when(accountService.findById(2L)).thenReturn(Optional.empty());
 
@@ -88,11 +89,11 @@ public class TransactionServiceImplementationTest {
         Account sourceAccount = Account.builder()
                 .id(1L)
                 .balance(new BigDecimal("100.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
-        final Transaction transaction =transactionTest(1L,1L,new BigDecimal("20.0"),"USD");
+        final Transaction transaction =transactionTest(1L,1L,new BigDecimal("20.0"),Currency.USD);
         when(accountService.findById(eq(sourceAccount.getId()))).thenReturn(Optional.of(sourceAccount));
 
         IllegalArgumentException argumentException = assertThrows(IllegalArgumentException.class,()->transactionServiceImplementation.createNewTransaction(transaction));
@@ -105,19 +106,19 @@ public class TransactionServiceImplementationTest {
         Account sourceAccount = Account.builder()
                 .id(1L)
                 .balance(new BigDecimal("10.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
         Account targetAccount = Account.builder()
                 .id(2L)
                 .balance(new BigDecimal("50.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T13:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
 
-        final Transaction transaction =transactionTest(1L,2L,new BigDecimal("60.0"),"USD");
+        final Transaction transaction =transactionTest(1L,2L,new BigDecimal("60.0"),Currency.USD);
         when(accountService.findById(eq(sourceAccount.getId()))).thenReturn(Optional.of(sourceAccount));
         when(accountService.findById(eq(targetAccount.getId()))).thenReturn(Optional.of(targetAccount));
 
@@ -131,19 +132,19 @@ public class TransactionServiceImplementationTest {
         Account sourceAccount = Account.builder()
                 .id(1L)
                 .balance(new BigDecimal("100.00"))
-                .currency("EUR")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
         Account targetAccount = Account.builder()
                 .id(2L)
                 .balance(new BigDecimal("50.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T13:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
 
-        final Transaction transaction =transactionTest(1L,2L,new BigDecimal("60.0"),"USD");
+        final Transaction transaction =transactionTest(1L,2L,new BigDecimal("60.0"),Currency.USD);
         when(accountService.findById(eq(sourceAccount.getId()))).thenReturn(Optional.of(sourceAccount));
         when(accountService.findById(eq(targetAccount.getId()))).thenReturn(Optional.of(targetAccount));
 
@@ -157,19 +158,19 @@ public class TransactionServiceImplementationTest {
         Account sourceAccount = Account.builder()
                 .id(1L)
                 .balance(new BigDecimal("100.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
         Account targetAccount = Account.builder()
                 .id(2L)
                 .balance(new BigDecimal("50.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T13:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
 
-        final Transaction transaction = transactionTest(1L,2L,new BigDecimal("20.0"),"EUR");
+        final Transaction transaction = transactionTest(1L,2L,new BigDecimal("20.0"),Currency.EUR);
         when(accountService.findById(eq(sourceAccount.getId()))).thenReturn(Optional.of(sourceAccount));
         when(accountService.findById(eq(targetAccount.getId()))).thenReturn(Optional.of(targetAccount));
 

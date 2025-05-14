@@ -23,6 +23,10 @@ public class AccountServiceImplementation implements AccountService {
 
     @Override
     public Account createUpdate(final Account account) {
+        if (account.getCurrency()==null) {
+            throw new IllegalArgumentException("Invalid currency:");
+
+        }
         final AccountEntity accountEntity = accountToAccountEntity(account);
         final AccountEntity savedAccountEntity= accountRepository.save(accountEntity);
         return accountEntityToAccount(savedAccountEntity);

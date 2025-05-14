@@ -1,5 +1,6 @@
 package bank.money.transfer.db.controllers;
 
+import bank.money.transfer.util.Currency;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import bank.money.transfer.db.domain.dto.Account;
@@ -56,7 +57,7 @@ public class AccountControllerIT {
     public void testAccountUpdate() throws Exception {
         final Account account = accountTest();
         accountService.createUpdate(account);
-        account.setCurrency("TUR");
+        account.setCurrency(Currency.TRY);
         final ObjectMapper objectMapper= new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         final String accountJSON= objectMapper.writeValueAsString(account);

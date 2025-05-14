@@ -1,5 +1,6 @@
 package bank.money.transfer.db.domain.entities;
 
+import bank.money.transfer.util.Currency;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +30,7 @@ public class TransactionEntity {
 
     private BigDecimal amount;
 
-    private String currency;
+    private Currency currency;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

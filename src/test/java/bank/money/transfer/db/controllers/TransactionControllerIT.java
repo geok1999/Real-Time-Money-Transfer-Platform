@@ -1,5 +1,6 @@
 package bank.money.transfer.db.controllers;
 
+import bank.money.transfer.util.Currency;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,20 +41,20 @@ public class TransactionControllerIT {
         Account sourceAccount = Account.builder()
                 .id(1L)
                 .balance(new BigDecimal("100.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
         Account targetAccount = Account.builder()
                 .id(2L)
                 .balance(new BigDecimal("50.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T13:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
         accountService.createUpdate(sourceAccount);
         accountService.createUpdate(targetAccount);
 
-        final Transaction transaction = transactionTest(1L,2L,new BigDecimal("60.0"),"USD");
+        final Transaction transaction = transactionTest(1L,2L,new BigDecimal("60.0"),Currency.USD);
         final ObjectMapper objectMapper= new ObjectMapper();
         final String transactionJSON= objectMapper.writeValueAsString(transaction);
 
@@ -75,29 +76,29 @@ public class TransactionControllerIT {
         Account sourceAccount = Account.builder()
                 .id(1L)
                 .balance(new BigDecimal("50.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
         Account targetAccount1 = Account.builder()
                 .id(2L)
                 .balance(new BigDecimal("50.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T13:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
         Account targetAccount2 = Account.builder()
                 .id(3L)
                 .balance(new BigDecimal("30.00"))
-                .currency("USD")
+                .currency(Currency.USD)
                 .createdAt(LocalDateTime.parse("2024-01-15T13:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
         accountService.createUpdate(sourceAccount);
         accountService.createUpdate(targetAccount1);
         accountService.createUpdate(targetAccount2);
-        final Transaction transaction1 = transactionTest(1L,2L,new BigDecimal("20.0"),"USD");
-        final Transaction transaction2 = transactionTest(1L,3L,new BigDecimal("20.0"),"USD");
+        final Transaction transaction1 = transactionTest(1L,2L,new BigDecimal("20.0"),Currency.USD);
+        final Transaction transaction2 = transactionTest(1L,3L,new BigDecimal("20.0"),Currency.USD);
 
 
         final ObjectMapper objectMapper = new ObjectMapper();
