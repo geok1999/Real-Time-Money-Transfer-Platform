@@ -1,0 +1,39 @@
+# Ignore everything
+/.idea/vcs.xml
+
+# But not these files/folders:
+!src/
+!docker-compose.yml
+!README.md
+
+# If you want to allow README.md in any case (case-insensitive)
+!README.md
+!readme.md
+
+# Explicitly include specific Java files you want to track
+!src/main/java/bank/money/transfer/TransferMoneyApplication.java
+!src/main/java/bank/money/transfer/db/controllers/AccountController.java
+!src/main/java/bank/money/transfer/db/controllers/TransactionController.java
+!src/main/java/bank/money/transfer/db/domain/dto/Account.java
+
+# If you use .env or config files, add exceptions as needed:
+#!.env
+
+# Ignore build and IDE files
+/.idea/
+/target/
+/build/
+/out/
+*.iml
+*.class
+
+# Ignore Maven wrapper scripts
+mvnw
+mvnw.cmd
+
+# Ignore transfermoneyApi.impl file
+transfermoneyApi.impl
+
+# Ignore OS files
+.DS_Store
+Thumbs.db

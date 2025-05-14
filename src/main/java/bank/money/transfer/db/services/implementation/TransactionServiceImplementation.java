@@ -38,7 +38,6 @@ public class TransactionServiceImplementation implements TransactionService {
     @Override
     @Retryable(
             retryFor = {CannotAcquireLockException.class, OptimisticLockingFailureException.class, OptimisticLockException.class},
-            maxAttempts = 3,
             backoff = @Backoff(delay = 1000)
     )
     @Transactional(isolation = Isolation.SERIALIZABLE)
