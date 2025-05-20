@@ -2,6 +2,7 @@ package bank.money.transfer.db.controllers;
 
 import bank.money.transfer.db.domain.dto.Account;
 import bank.money.transfer.db.services.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class AccountController {
 
     //For Creating or Updating an existing Account
     @PostMapping(path = "/account/{id}")
-    public ResponseEntity<Account> createOrUpdateAccount(@PathVariable final Long id, @RequestBody final Account account){
+    public ResponseEntity<Account> createOrUpdateAccount(@PathVariable final Long id, @Valid @RequestBody final Account account){
         account.setId(id);
         boolean isAccountExists =accountService.isAccountExists(account);
         final Account savedAccount=accountService.createUpdate(account);
