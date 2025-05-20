@@ -18,7 +18,7 @@ public final class DataInputTest {
                 .id(1L)
                 .balance(new BigDecimal("2345.67"))
                 .currency(Currency.USD)
-                .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+               // .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
     }
 
@@ -27,7 +27,7 @@ public final class DataInputTest {
                 .id(1L)
                 .balance(new BigDecimal("2345.67"))
                 .currency(Currency.USD)
-                .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+               // .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
     }
 

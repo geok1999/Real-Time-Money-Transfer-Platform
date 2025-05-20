@@ -42,14 +42,14 @@ public class TransactionControllerIT {
                 .id(1L)
                 .balance(new BigDecimal("100.00"))
                 .currency(Currency.USD)
-                .createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                //.createdAt(LocalDateTime.parse("2024-01-15T12:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
         Account targetAccount = Account.builder()
                 .id(2L)
                 .balance(new BigDecimal("50.00"))
                 .currency(Currency.USD)
-                .createdAt(LocalDateTime.parse("2024-01-15T13:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+               // .createdAt(LocalDateTime.parse("2024-01-15T13:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
         accountService.createUpdate(sourceAccount);
         accountService.createUpdate(targetAccount);
@@ -67,7 +67,7 @@ public class TransactionControllerIT {
                 .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].sourceAccountId").value(transaction.getSourceAccountId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].targetAccountId").value(transaction.getTargetAccountId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].amount").value(transaction.getAmount()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].currency").value(transaction.getCurrency()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].currency").value(transaction.getCurrency().toString()));
 
     }
 
@@ -114,7 +114,7 @@ public class TransactionControllerIT {
                         .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].sourceAccountId").value(transaction1.getSourceAccountId()))
                         .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].targetAccountId").value(transaction1.getTargetAccountId()))
                         .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].amount").value(transaction1.getAmount()))
-                        .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].currency").value(transaction1.getCurrency()));
+                        .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].currency").value(transaction1.getCurrency().toString()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -129,7 +129,7 @@ public class TransactionControllerIT {
                         .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].sourceAccountId").value(transaction2.getSourceAccountId()))
                         .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].targetAccountId").value(transaction2.getTargetAccountId()))
                         .andExpect(MockMvcResultMatchers.jsonPath("$['Transaction: '].amount").value(transaction2.getAmount()))
-                        .andExpect(MockMvcResultMatchers.jsonPath("['Transaction: '].currency").value(transaction2.getCurrency()));
+                        .andExpect(MockMvcResultMatchers.jsonPath("['Transaction: '].currency").value(transaction2.getCurrency().toString()));
             } catch (Exception e) {
                 e.printStackTrace();
             }

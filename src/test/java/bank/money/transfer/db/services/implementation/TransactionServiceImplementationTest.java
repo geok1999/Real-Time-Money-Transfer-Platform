@@ -139,7 +139,7 @@ public class TransactionServiceImplementationTest {
         Account targetAccount = Account.builder()
                 .id(2L)
                 .balance(new BigDecimal("50.00"))
-                .currency(Currency.USD)
+                .currency(Currency.TRY)
                 .createdAt(LocalDateTime.parse("2024-01-15T13:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .build();
 
