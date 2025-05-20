@@ -6,8 +6,6 @@ import bank.money.transfer.db.domain.entities.AccountEntity;
 import bank.money.transfer.util.Currency;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public final class DataInputTest {
     private DataInputTest() {

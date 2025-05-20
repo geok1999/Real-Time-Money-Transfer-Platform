@@ -21,7 +21,7 @@ public class Transaction {
     @NotNull
     private Long targetAccountId;
     @NotNull
-    @DecimalMin(value = "0.01", inclusive = true)
+    @DecimalMin(value = "0.01")
     private BigDecimal amount;
     private Currency currency;
     private LocalDateTime createdAt;

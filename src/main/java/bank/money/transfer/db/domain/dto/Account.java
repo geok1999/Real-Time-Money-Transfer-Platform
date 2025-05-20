@@ -21,7 +21,7 @@ public class Account {
     @NotNull
     private Long id;
     @NotNull
-    @DecimalMin(value = "0.01", inclusive = true)
+    @DecimalMin(value = "0.01")
     private BigDecimal balance;
     private Currency currency;
     private LocalDateTime createdAt;
