@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +36,7 @@ public class TransactionServiceImplementationTest {
     private AccountService  accountService;
 
     @Test
-    public void testCreateNewTransaction(){
+    public void testCreateNewTransaction() throws AccountNotFoundException {
         Account sourceAccount = Account.builder()
                 .id(1L)
                 .balance(new BigDecimal("100.00"))
@@ -79,9 +80,9 @@ public class TransactionServiceImplementationTest {
         when(accountService.findById(eq(sourceAccount.getId()))).thenReturn(Optional.of(sourceAccount));
         when(accountService.findById(2L)).thenReturn(Optional.empty());
 
-        IllegalArgumentException argumentException = assertThrows(IllegalArgumentException.class,()->transactionServiceImplementation.createNewTransaction(transaction));
+        AccountNotFoundException argumentException = assertThrows(AccountNotFoundException.class,()->transactionServiceImplementation.createNewTransaction(transaction));
 
-        assertEquals("Source or Target account not Exist!", argumentException.getMessage());
+        assertEquals("Target account not found", argumentException.getMessage());
     }
 
     @Test

@@ -2,6 +2,7 @@ package bank.money.transfer.db.domain.entities;
 
 import bank.money.transfer.util.Currency;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
