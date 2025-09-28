@@ -1,4 +1,4 @@
-package bank.money.transfer.db.domain.dto;
+package bank.money.transfer.domain.dto;
 
 
 import bank.money.transfer.util.Currency;

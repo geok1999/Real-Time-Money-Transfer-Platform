@@ -1,7 +1,7 @@
-package bank.money.transfer.db.services;
+package bank.money.transfer.services;
 
 
-import bank.money.transfer.db.domain.dto.Transaction;
+import bank.money.transfer.domain.dto.Transaction;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;

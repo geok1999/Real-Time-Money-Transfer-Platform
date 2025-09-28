@@ -4,9 +4,9 @@ import bank.money.transfer.util.Currency;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import bank.money.transfer.db.domain.dto.Account;
-import bank.money.transfer.db.domain.dto.Transaction;
-import bank.money.transfer.db.services.AccountService;
+import bank.money.transfer.domain.dto.Account;
+import bank.money.transfer.domain.dto.Transaction;
+import bank.money.transfer.services.AccountService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

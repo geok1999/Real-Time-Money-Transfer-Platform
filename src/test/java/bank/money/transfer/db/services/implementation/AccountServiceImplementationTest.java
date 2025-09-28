@@ -1,8 +1,9 @@
 package bank.money.transfer.db.services.implementation;
 
-import bank.money.transfer.db.domain.dto.Account;
-import bank.money.transfer.db.domain.entities.AccountEntity;
-import bank.money.transfer.db.repositories.AccountRepository;
+import bank.money.transfer.domain.dto.Account;
+import bank.money.transfer.domain.entities.AccountEntity;
+import bank.money.transfer.repositories.AccountRepository;
+import bank.money.transfer.services.implementation.AccountServiceImplementation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,6 +1,6 @@
-package bank.money.transfer.db.repositories;
+package bank.money.transfer.repositories;
 
-import bank.money.transfer.db.domain.entities.AccountEntity;
+import bank.money.transfer.domain.entities.AccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

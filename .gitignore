@@ -12,9 +12,9 @@
 
 # Explicitly include specific Java files you want to track
 !src/main/java/bank/money/transfer/TransferMoneyApplication.java
-!src/main/java/bank/money/transfer/db/controllers/AccountController.java
-!src/main/java/bank/money/transfer/db/controllers/TransactionController.java
-!src/main/java/bank/money/transfer/db/domain/dto/Account.java
+!src/main/java/bank/money/transfer/controllers/AccountController.java
+!src/main/java/bank/money/transfer/controllers/TransactionController.java
+!src/main/java/bank/money/transfer/domain/dto/Account.java
 
 # If you use .env or config files, add exceptions as needed:
 #!.env

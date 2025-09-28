@@ -1,9 +1,9 @@
-package bank.money.transfer.db.services.implementation;
+package bank.money.transfer.services.implementation;
 
-import bank.money.transfer.db.domain.dto.Account;
-import bank.money.transfer.db.domain.entities.AccountEntity;
-import bank.money.transfer.db.repositories.AccountRepository;
-import bank.money.transfer.db.services.AccountService;
+import bank.money.transfer.domain.dto.Account;
+import bank.money.transfer.domain.entities.AccountEntity;
+import bank.money.transfer.repositories.AccountRepository;
+import bank.money.transfer.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

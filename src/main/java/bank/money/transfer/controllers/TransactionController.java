@@ -1,8 +1,8 @@
-package bank.money.transfer.db.controllers;
+package bank.money.transfer.controllers;
 
 
-import bank.money.transfer.db.domain.dto.Transaction;
-import bank.money.transfer.db.services.TransactionService;
+import bank.money.transfer.domain.dto.Transaction;
+import bank.money.transfer.services.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

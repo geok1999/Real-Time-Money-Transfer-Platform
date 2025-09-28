@@ -1,8 +1,8 @@
 package bank.money.transfer.db;
 
-import bank.money.transfer.db.domain.dto.Account;
-import bank.money.transfer.db.domain.dto.Transaction;
-import bank.money.transfer.db.domain.entities.AccountEntity;
+import bank.money.transfer.domain.dto.Account;
+import bank.money.transfer.domain.dto.Transaction;
+import bank.money.transfer.domain.entities.AccountEntity;
 import bank.money.transfer.util.Currency;
 
 import java.math.BigDecimal;

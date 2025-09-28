@@ -1,4 +1,4 @@
-package bank.money.transfer.db.exceptions;
+package bank.money.transfer.exceptions;
 
 import bank.money.transfer.util.Currency;
 import org.springframework.http.ResponseEntity;

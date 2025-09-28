@@ -1,6 +1,6 @@
-package bank.money.transfer.db.services;
+package bank.money.transfer.services;
 
-import bank.money.transfer.db.domain.dto.Account;
+import bank.money.transfer.domain.dto.Account;
 
 import java.util.List;
 import java.util.Optional;

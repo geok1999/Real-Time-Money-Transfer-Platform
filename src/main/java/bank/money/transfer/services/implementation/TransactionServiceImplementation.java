@@ -1,12 +1,12 @@
-package bank.money.transfer.db.services.implementation;
+package bank.money.transfer.services.implementation;
 
 
-import bank.money.transfer.db.domain.dto.Account;
-import bank.money.transfer.db.domain.dto.Transaction;
-import bank.money.transfer.db.domain.entities.TransactionEntity;
-import bank.money.transfer.db.repositories.TransactionRepository;
-import bank.money.transfer.db.services.AccountService;
-import bank.money.transfer.db.services.TransactionService;
+import bank.money.transfer.domain.dto.Account;
+import bank.money.transfer.domain.dto.Transaction;
+import bank.money.transfer.domain.entities.TransactionEntity;
+import bank.money.transfer.repositories.TransactionRepository;
+import bank.money.transfer.services.AccountService;
+import bank.money.transfer.services.TransactionService;
 import jakarta.persistence.OptimisticLockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.CannotAcquireLockException;
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

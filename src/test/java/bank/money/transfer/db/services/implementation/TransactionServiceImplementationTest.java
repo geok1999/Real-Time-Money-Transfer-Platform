@@ -1,11 +1,12 @@
 package bank.money.transfer.db.services.implementation;
 
 
-import bank.money.transfer.db.domain.dto.Account;
-import bank.money.transfer.db.domain.dto.Transaction;
-import bank.money.transfer.db.domain.entities.TransactionEntity;
-import bank.money.transfer.db.repositories.TransactionRepository;
-import bank.money.transfer.db.services.AccountService;
+import bank.money.transfer.domain.dto.Account;
+import bank.money.transfer.domain.dto.Transaction;
+import bank.money.transfer.domain.entities.TransactionEntity;
+import bank.money.transfer.repositories.TransactionRepository;
+import bank.money.transfer.services.AccountService;
+import bank.money.transfer.services.implementation.TransactionServiceImplementation;
 import bank.money.transfer.util.Currency;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
