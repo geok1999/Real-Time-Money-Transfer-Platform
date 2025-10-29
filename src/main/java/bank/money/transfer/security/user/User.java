@@ -1,4 +1,4 @@
-package bank.money.transfer.user;
+package bank.money.transfer.security.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

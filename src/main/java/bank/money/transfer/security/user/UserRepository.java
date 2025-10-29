@@ -1,4 +1,4 @@
-package bank.money.transfer.user;
+package bank.money.transfer.security.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
