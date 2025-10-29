@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
 import java.util.Map;
-
+//TODO: fix the urls based on REST
 @RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {

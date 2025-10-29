@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+//TODO: fix the urls based on REST
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
