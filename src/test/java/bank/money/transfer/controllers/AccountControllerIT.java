@@ -1,10 +1,12 @@
-package bank.money.transfer.db.controllers;
+package bank.money.transfer.controllers;
 
+import bank.money.transfer.controllers.security.AuthHelperUtils;
 import bank.money.transfer.util.Currency;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import bank.money.transfer.domain.dto.Account;
 import bank.money.transfer.services.AccountService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import static bank.money.transfer.db.DataInputTest.accountTest;
+import static bank.money.transfer.DataInputTest.accountTest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -31,6 +33,17 @@ public class AccountControllerIT {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private String token;
+
+    @BeforeEach
+    public void setup() throws Exception {
+        token = AuthHelperUtils.obtainAccessToken(mockMvc, objectMapper,
+                "testuser@example.com", "TestPassword123!");
+    }
+
     @Test
     public void testAccountCreation() throws Exception {
         final Account account = accountTest();
@@ -38,9 +51,10 @@ public class AccountControllerIT {
         objectMapper.registerModule(new JavaTimeModule());
         final String accountJSON= objectMapper.writeValueAsString(account);
 
-        mockMvc.perform(post("/api/accounts/account/" + account.getId())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(accountJSON))
+        mockMvc.perform(post("/api/v1/account/" + account.getId())
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(accountJSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(account.getId()))
                 .andExpect(jsonPath("$.balance").value(account.getBalance()))
@@ -57,7 +71,8 @@ public class AccountControllerIT {
         objectMapper.registerModule(new JavaTimeModule());
         final String accountJSON= objectMapper.writeValueAsString(account);
 
-        mockMvc.perform(post("/api/accounts/account/" + account.getId())
+        mockMvc.perform(post("/api/v1/account/" + account.getId())
+                        .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(accountJSON))
                 .andExpect(status().isOk())
@@ -70,7 +85,8 @@ public class AccountControllerIT {
 
     @Test
     public void testAccountFindingCaseNotExists() throws Exception {
-        mockMvc.perform(get("/accounts/"+5L))
+        mockMvc.perform(get("/api/v1/account/"+5L)
+                .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }
 
@@ -80,7 +96,8 @@ public class AccountControllerIT {
 
         accountService.createUpdate(account);
 
-        mockMvc.perform(get("/api/accounts/account/"+account.getId()))
+        mockMvc.perform(get("/api/v1/account/"+account.getId())
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(account.getId()))
                 .andExpect(jsonPath("$.balance").value(account.getBalance()))
@@ -90,7 +107,8 @@ public class AccountControllerIT {
 
     @Test
     public void testListOfAllAccountsForEmptyList() throws Exception {
-        mockMvc.perform(get("/api/accounts/account"))
+        mockMvc.perform(get("/api/v1/account")
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(content().string("[]"));
 
@@ -100,7 +118,8 @@ public class AccountControllerIT {
         final Account account = accountTest();
         accountService.createUpdate(account);
 
-        mockMvc.perform(get("/api/accounts/account"))
+        mockMvc.perform(get("/api/v1/account")
+                .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").value(account.getId()))
                 .andExpect(jsonPath("$.[0].balance").value(account.getBalance()))

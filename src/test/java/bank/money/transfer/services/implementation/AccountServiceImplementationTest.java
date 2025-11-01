@@ -1,9 +1,8 @@
-package bank.money.transfer.db.services.implementation;
+package bank.money.transfer.services.implementation;
 
 import bank.money.transfer.domain.dto.Account;
 import bank.money.transfer.domain.entities.AccountEntity;
 import bank.money.transfer.repositories.AccountRepository;
-import bank.money.transfer.services.implementation.AccountServiceImplementation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static bank.money.transfer.db.DataInputTest.accountEntityTest;
-import static bank.money.transfer.db.DataInputTest.accountTest;
+import static bank.money.transfer.DataInputTest.accountEntityTest;
+import static bank.money.transfer.DataInputTest.accountTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;

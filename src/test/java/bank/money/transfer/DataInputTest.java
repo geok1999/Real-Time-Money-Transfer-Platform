@@ -1,4 +1,4 @@
-package bank.money.transfer.db;
+package bank.money.transfer;
 
 import bank.money.transfer.domain.dto.Account;
 import bank.money.transfer.domain.dto.Transaction;

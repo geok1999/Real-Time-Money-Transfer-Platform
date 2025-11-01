@@ -1,4 +1,4 @@
-package bank.money.transfer.db.services.implementation;
+package bank.money.transfer.services.implementation;
 
 
 import bank.money.transfer.domain.dto.Account;
@@ -6,7 +6,6 @@ import bank.money.transfer.domain.dto.Transaction;
 import bank.money.transfer.domain.entities.TransactionEntity;
 import bank.money.transfer.repositories.TransactionRepository;
 import bank.money.transfer.services.AccountService;
-import bank.money.transfer.services.implementation.TransactionServiceImplementation;
 import bank.money.transfer.util.Currency;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-import static bank.money.transfer.db.DataInputTest.*;
+import static bank.money.transfer.DataInputTest.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
