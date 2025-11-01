@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 //TODO: fix the urls based on REST
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/api/v1")
 public class TransactionController {
 
     private final TransactionService transactionService;

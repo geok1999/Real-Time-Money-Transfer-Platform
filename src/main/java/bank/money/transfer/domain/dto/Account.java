@@ -30,7 +30,6 @@ public class Account {
 
     private Currency currency;
 
-    @NotNull(message = "Created date is required")
     @PastOrPresent(message = "Created date cannot be in the future")
     private LocalDateTime createdAt;
 

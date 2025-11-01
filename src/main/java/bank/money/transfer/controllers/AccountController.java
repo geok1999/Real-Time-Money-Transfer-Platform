@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 //TODO: fix the urls based on REST
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("/api/v1")
 public class AccountController {
 
     private final AccountService accountService;
