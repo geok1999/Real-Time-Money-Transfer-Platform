@@ -93,7 +93,7 @@ A secure, scalable, and production-ready RESTful API for financial money transfe
    ```
 
 ## 📡 API Endpoints
-### [Swagger link](http://localhost:8080/swagger-ui/index.html#/)
+### [Swagger link](http://localhost:8080/swagger-ui/index.html)
 
 ### Account Management
 
