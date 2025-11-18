@@ -1,5 +1,8 @@
-package bank.money.transfer.security.auth;
+package bank.money.transfer.security.auth.controller;
 
+import bank.money.transfer.security.auth.AuthenticationRequest;
+import bank.money.transfer.security.auth.AuthenticationResponse;
+import bank.money.transfer.security.auth.RegisterRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -8,20 +11,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @RequestMapping("/api/v1/auth")
-@RequiredArgsConstructor
 @Tag(name = "Authentication", description = "APIs for user registration and authentication (JWT-based)")
-public class AuthenticationController {
-
-    private final AuthenticationService authenticationService;
+public interface AuthenticationController {
 
     @Operation(
             summary = "Register New User",
@@ -74,9 +71,7 @@ public class AuthenticationController {
             )
     })
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authenticationService.register(request));
-    }
+    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest request);
 
     @Operation(
             summary = "Authenticate User",
@@ -137,8 +132,5 @@ public class AuthenticationController {
             )
     })
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@Valid @RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
-
-    }
+    public ResponseEntity<AuthenticationResponse> authenticate(@Valid @RequestBody AuthenticationRequest request);
 }
