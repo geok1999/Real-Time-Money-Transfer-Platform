@@ -9,12 +9,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <groupId>fetrax.gr</groupId>
+    <artifactId>TranferMoneyApi</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+    <name>FetraX</name>
+    <description>Federated Transaction eXecution</description>
 
-    <groupId>interview.bank</groupId>
-    <artifactId>TranferMoney</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>TransferMoney</name>
-    <description>TransferMoney</description>
     <url/>
     <licenses>
         <license/>
