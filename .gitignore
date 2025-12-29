@@ -11,10 +11,10 @@
 !readme.md
 
 # Explicitly include specific Java files you want to track
-!src/main/java/bank/money/transfer/TransferMoneyApplication.java
-!src/main/java/bank/money/transfer/controllers/AccountController.java
-!src/main/java/bank/money/transfer/controllers/TransactionController.java
-!src/main/java/bank/money/transfer/domain/dto/Account.java
+!src/main/java/gr/fetrax/TransferMoneyApplication.java
+!src/main/java/gr/fetrax/controllers/AccountController.java
+!src/main/java/gr/fetrax/controllers/TransactionController.java
+!src/main/java/gr/fetrax/domain/dto/Account.java
 
 # If you use .env or config files, add exceptions as needed:
 #!.env
@@ -31,8 +31,8 @@
 mvnw
 mvnw.cmd
 
-# Ignore transfermoneyApi.impl file
-transfermoneyApi.impl
+# Ignore Fetrax.iml file
+Fetrax.iml
 
 # Ignore OS files
 .DS_Store
