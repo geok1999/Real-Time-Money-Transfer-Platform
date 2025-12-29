@@ -12,9 +12,9 @@
 
 # Explicitly include specific Java files you want to track
 !src/main/java/gr/fetrax/TransferMoneyApplication.java
-!src/main/java/gr/fetrax/db/controllers/AccountController.java
-!src/main/java/gr/fetrax/db/controllers/TransactionController.java
-!src/main/java/gr/fetrax/db/domain/dto/Account.java
+!src/main/java/gr/fetrax/controllers/AccountController.java
+!src/main/java/gr/fetrax/controllers/TransactionController.java
+!src/main/java/gr/fetrax/domain/dto/Account.java
 
 # If you use .env or config files, add exceptions as needed:
 #!.env
