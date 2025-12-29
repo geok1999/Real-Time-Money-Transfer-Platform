@@ -1,6 +1,5 @@
 package gr.fetrax.security.auth.controller.impl;
 
-import bank.money.transfer.security.auth.*;
 import gr.fetrax.security.auth.AuthenticationRequest;
 import gr.fetrax.security.auth.AuthenticationResponse;
 import gr.fetrax.security.auth.AuthenticationService;
