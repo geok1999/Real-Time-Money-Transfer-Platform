@@ -1,5 +1,6 @@
 package gr.fetrax.controllers;
 
+import gr.fetrax.controllers.security.AuthHelperUtils;
 import gr.fetrax.util.Currency;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.fetrax.domain.dto.Account;
 import gr.fetrax.domain.dto.Transaction;
 import gr.fetrax.services.AccountService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,18 @@ public class TransactionControllerIT {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private String token;
+
+    @BeforeEach
+    public void setup() throws Exception {
+        token = AuthHelperUtils.obtainAccessToken(mockMvc, objectMapper,
+                "testuser@example.com", "TestPassword123!");
+    }
+
     @Test
     public void testTransactionCreationSuccess() throws Exception {
         Account sourceAccount = Account.builder()
@@ -60,7 +74,8 @@ public class TransactionControllerIT {
 
         mockMvc
                 .perform(
-                        MockMvcRequestBuilders.post("/api/transactions/transaction")
+                        MockMvcRequestBuilders.post("/api/v1/transaction")
+                                .header("Authorization", "Bearer " + token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(transactionJSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -107,7 +122,8 @@ public class TransactionControllerIT {
 
         Runnable task1 = () -> {
             try {
-                mockMvc.perform(MockMvcRequestBuilders.post("/api/transactions/transaction")
+                mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/transaction")
+                                .header("Authorization", "Bearer " + token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(transactionJSON1))
                         .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -122,7 +138,8 @@ public class TransactionControllerIT {
 
         Runnable task2 = () -> {
             try {
-                mockMvc.perform(MockMvcRequestBuilders.post("/api/transactions/transaction")
+                mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/transaction")
+                                .header("Authorization", "Bearer " + token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(transactionJSON2))
                         .andExpect(MockMvcResultMatchers.status().isCreated())

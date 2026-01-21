@@ -1,37 +1,26 @@
 package gr.fetrax.controllers;
 
 import gr.fetrax.domain.dto.Account;
-import gr.fetrax.services.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("/api/v1")
 @Tag(
         name = "Account Management",
         description = "Complete REST API for managing bank accounts with support for create, read, update operations. "
 )
-public class AccountController {
-
-    private final AccountService accountService;
-
-    @Autowired
-    public AccountController(final AccountService accountService) {
-        this.accountService = accountService;
-    }
+@SecurityRequirement(name = "bearerAuth")
+public interface AccountController {
 
     @Operation(
             summary = "Create or Update Account",
@@ -186,19 +175,7 @@ public class AccountController {
             )
     })
     @PostMapping(path = "/account/{id}")
-    public ResponseEntity<Account> createOrUpdateAccount(@PathVariable final Long id, @Valid @RequestBody final Account account){
-        account.setId(id);
-        boolean isAccountExists =accountService.isAccountExists(account);
-        final Account savedAccount=accountService.createUpdate(account);
-
-        if(isAccountExists){
-            return new ResponseEntity<>(savedAccount, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(savedAccount, HttpStatus.CREATED);
-        }
-
-
-    }
+    public ResponseEntity<Account> createOrUpdateAccount(@PathVariable final Long id, @Valid @RequestBody final Account account);
 
     @Operation(
             summary = "Get Account by ID",
@@ -296,11 +273,7 @@ public class AccountController {
             )
     })
     @GetMapping(path = "/account/{id}")
-    public ResponseEntity<Account> findAccount(@PathVariable final Long id){
-        final Optional<Account> foundAccount=accountService.findById(id);
-        return foundAccount.map(account -> new ResponseEntity<>(account,HttpStatus.OK))
-                    .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+    public ResponseEntity<Account> findAccount(@PathVariable final Long id);
 
     @Operation(
             summary = "List All Accounts",
@@ -424,8 +397,6 @@ public class AccountController {
             )
     })
     @GetMapping(path = "/account")
-    public ResponseEntity<List<Account>> ListAllAccounts(){
-        return new ResponseEntity<>(accountService.listAccounts(),HttpStatus.OK);
-    }
+    public ResponseEntity<List<Account>> ListAllAccounts();
 
 }

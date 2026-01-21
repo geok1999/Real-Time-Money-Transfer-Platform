@@ -31,8 +31,8 @@
 mvnw
 mvnw.cmd
 
-# Ignore FetraXApplication.impl file
-FetraXApplication.iml
+# Ignore Fetrax.iml file
+Fetrax.iml
 
 # Ignore OS files
 .DS_Store

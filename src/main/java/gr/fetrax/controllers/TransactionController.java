@@ -1,41 +1,29 @@
 package gr.fetrax.controllers;
 
-
 import gr.fetrax.domain.dto.Transaction;
-import gr.fetrax.services.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
-import java.util.Map;
 
-@RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/api/v1")
 @Tag(
         name = "Transaction Processing",
         description = "Complete REST API for executing and managing financial transactions between accounts. " +
                 "Supports real-time money transfers with comprehensive validation, concurrency handling, "
 
 )
-public class TransactionController {
-
-    private final TransactionService transactionService;
-
-    @Autowired
-    public TransactionController(final TransactionService transactionService) {
-        this.transactionService = transactionService;
-    }
+@SecurityRequirement(name = "bearerAuth")
+public interface TransactionController {
 
     @Operation(
             summary = "Execute Money Transfer",
@@ -295,14 +283,7 @@ public class TransactionController {
             )
     })
     @PostMapping(path = "/transaction")
-    public ResponseEntity<?> createTransaction(@RequestBody @Valid final Transaction transaction){
-        try{
-            final Transaction newTransaction=transactionService.createNewTransaction(transaction);
-            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("Message: ","Transaction was completed successfully","Transaction: ",newTransaction));
-        }catch (IllegalArgumentException | AccountNotFoundException e){
-            return ResponseEntity.badRequest().body(Map.of("Error: ",e.getMessage()));
-        }
-    }
+    public ResponseEntity<?> createTransaction(@RequestBody @Valid final Transaction transaction);
 
     @Operation(
             summary = "List All Transactions",
@@ -479,8 +460,6 @@ public class TransactionController {
             )
     })
     @GetMapping(path = "/LogTransaction")
-    public ResponseEntity<List<Transaction>> listAllTransactions(){
-        return new ResponseEntity<>(transactionService.listTransactions(),HttpStatus.OK);
-    }
+    public ResponseEntity<List<Transaction>> listAllTransactions();
 
 }
