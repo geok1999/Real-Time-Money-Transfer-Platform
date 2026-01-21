@@ -1,7 +1,7 @@
-# 💰 Money Transfer Banking API
+# 💰 FetraX - Federated Transaction eXecution API
 
 [![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://openjdk.java.net/projects/jdk/17/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.4-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-blue.svg)](https://www.postgresql.org/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-red.svg)](https://maven.apache.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -12,37 +12,43 @@ A secure, scalable, and production-ready RESTful API for financial money transfe
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     API Gateway Layer                       │
+│                    REST API Layer                           │
+│         (Controllers with Interface-Based Design)           │
 ├─────────────────────────────────────────────────────────────┤
-│  Account Management  │  Transaction Processing  │  Security │
+│  Account Controller  │  Transaction Controller  │  Auth     │
 ├─────────────────────────────────────────────────────────────┤
-│                   Business Logic Layer                      │
+│              JWT Authentication Filter                      │
 ├─────────────────────────────────────────────────────────────┤
-│                     Data Access Layer                       │
+│                   Service Layer                             │
+│    (AccountService, TransactionService, AuthService)        │
+├─────────────────────────────────────────────────────────────┤
+│                  Repository Layer                           │
+│              (Spring Data JPA Repositories)                 │
 ├─────────────────────────────────────────────────────────────┤
 │                    PostgreSQL Database                      │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## ✨ Key Features
+## ✨ Features
 
 ### 💸 Core Banking Operations
 - **Secure Money Transfers** - Real-time balance updates with ACID compliance
-- **Account Management** - Create, update, and manage bank accounts
-- **Multi-Currency Support** - Handle transfers in USD, EUR, GBP, and more
+- **Account Management** - Create, update, and retrieve bank accounts
+- **Multi-Currency Support** - USD, EUR, GBP, TRY
 - **Transaction History** - Complete audit trail of all financial operations
 
-### 🔒 Security & Compliance
-- **Concurrent Transaction Handling** - Optimistic locking prevents race conditions
-- **Input Validation** - Comprehensive validation with detailed error responses
-- **Audit Logging** - Complete transaction audit trail for compliance
-- **Error Handling** - Graceful error handling with meaningful responses
+### 🔒 Security (Implemented)
+- **JWT Authentication** - Stateless token-based authentication
+- **BCrypt Password Encoding** - Secure password storage
+- **Role-Based Access** - USER and ADMIN roles
+- **Protected Endpoints** - All API endpoints require authentication (except auth routes)
 
 ### 🏛️ Enterprise Architecture
-- **RESTful Design** - Clean, intuitive API endpoints
-- **Spring Boot Framework** - Modern Java enterprise framework
-- **JPA/Hibernate** - Robust database abstraction layer
-- **Retry Mechanisms** - Automatic retry for transient failures
+- **Interface-Based Controllers** - Clean separation of API contracts and implementations
+- **Optimistic Locking** - Prevents lost updates in concurrent scenarios
+- **Spring Retry** - Automatic retry for transient failures (OptimisticLockException, CannotAcquireLockException)
+- **Comprehensive Validation** - Jakarta Bean Validation with detailed error responses
+- **OpenAPI/Swagger Documentation** - Interactive API documentation
 
 ## 🚀 Quick Start
 
@@ -50,83 +56,116 @@ A secure, scalable, and production-ready RESTful API for financial money transfe
 
 - **Java 17** or higher
 - **Maven 3.9+**
-- **PostgreSQL 12+**
-- **Docker** (optional, for containerized database)
+- **Docker** (for PostgreSQL)
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/money-transfer-api.git
-   cd money-transfer-api
+   git clone https://github.com/your-username/fetrax-api.git
+   cd fetrax-api
    ```
 
 2. **Start PostgreSQL Database**
    ```bash
-   # Using Docker Compose (Recommended)
    docker-compose up -d
-   
-   # Or use your local PostgreSQL instance
-   # Update connection details in application.properties
    ```
 
-3. **Configure Application**
+3. **Set JWT Secret (Optional)**
    ```bash
-   # Copy and modify configuration
-   cp src/main/resources/application.properties.example src/main/resources/application.properties
-   
-   # Update database credentials
-   spring.datasource.url=jdbc:postgresql://localhost:5433/postgres
-   spring.datasource.username=postgres
-   spring.datasource.password=1234
+   # Default secret is provided for development
+   # For production, set environment variable:
+   export JWT_SECRET=your-base64-encoded-secret-key
    ```
 
 4. **Build and Run**
    ```bash
-   # Build the application
    mvn clean install
-   
-   # Run the application
    mvn spring-boot:run
-   
-   # Application will start on http://localhost:8080
    ```
+   Application starts at `http://localhost:8080`
 
 ## 📡 API Endpoints
-### [Swagger link](http://localhost:8080/swagger-ui/index.html)
 
-### Account Management
+### Swagger Documentation
+**[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)**
 
-| Method | Endpoint | Description | Status |
-|--------|----------|-------------|---------|
-| `POST` | `/api/accounts/account/{id}` | Create or update account | ✅ |
-| `GET` | `/api/accounts/account/{id}` | Get account details | ✅ |
-| `GET` | `/api/accounts/account` | List all accounts | ✅ |
+### Authentication (Public)
 
-### Transaction Operations
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/v1/auth/register` | Register new user |
+| `POST` | `/api/v1/auth/authenticate` | Login and get JWT token |
 
-| Method | Endpoint | Description | Status |
-|--------|----------|-------------|---------|
-| `POST` | `/api/transactions/transaction` | Execute money transfer | ✅ |
-| `GET` | `/api/transactions/LogTransaction` | Get transaction history | ✅ |
+### Account Management (Protected)
 
-### Example Usage
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/v1/account/{id}` | Create or update account |
+| `GET` | `/api/v1/account/{id}` | Get account by ID |
+| `GET` | `/api/v1/account` | List all accounts |
 
-#### Create Account
+### Transaction Operations (Protected)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/v1/transaction` | Execute money transfer |
+| `GET` | `/api/v1/LogTransaction` | Get transaction history |
+
+## 🔐 Authentication Flow
+
+### 1. Register a User
 ```bash
-curl -X POST http://localhost:8080/api/accounts/account/1 \
+curl -X POST http://localhost:8080/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
-    "balance": 1000.00,
-    "currency": "USD",
-    "createdAt": "2024-01-15T12:00:00"
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "password": "SecurePass123!"
   }'
 ```
 
-#### Execute Money Transfer
+### 2. Authenticate
 ```bash
-curl -X POST http://localhost:8080/api/transactions/transaction \
+curl -X POST http://localhost:8080/api/v1/auth/authenticate \
   -H "Content-Type: application/json" \
+  -d '{
+    "email": "john.doe@example.com",
+    "password": "SecurePass123!"
+  }'
+```
+Response:
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+### 3. Use Token for Protected Endpoints
+```bash
+curl -X GET http://localhost:8080/api/v1/account \
+  -H "Authorization: Bearer <your-token>"
+```
+
+## 📋 API Examples
+
+### Create Account
+```bash
+curl -X POST http://localhost:8080/api/v1/account/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
+  -d '{
+    "balance": 1000.00,
+    "currency": "USD"
+  }'
+```
+
+### Execute Money Transfer
+```bash
+curl -X POST http://localhost:8080/api/v1/transaction \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
   -d '{
     "sourceAccountId": 1,
     "targetAccountId": 2,
@@ -159,157 +198,223 @@ curl -X POST http://localhost:8080/api/transactions/transaction \
 }
 ```
 
+### User
+```json
+{
+  "id": 1,
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "role": "USER"
+}
+```
+
 ## 🔒 Business Rules & Validation
 
 ### Transfer Validation
-- ✅ **Positive Amount** - Transfer amount must be greater than 0.01
-- ✅ **Sufficient Balance** - Source account must have adequate funds
-- ✅ **Currency Matching** - All parties must use the same currency
-- ✅ **Account Validation** - Both accounts must exist and be active
-- ✅ **Self-Transfer Prevention** - Cannot transfer to the same account
+| Rule | Description |
+|------|-------------|
+| ✅ Positive Amount | Amount must be between 0.01 and 999,999.99 |
+| ✅ Sufficient Balance | Source account must have adequate funds |
+| ✅ Currency Matching | Source, target, and transaction must use same currency |
+| ✅ Account Validation | Both accounts must exist |
+| ✅ Self-Transfer Prevention | Cannot transfer to the same account |
 
-### Concurrency Control
-- **Optimistic Locking** - Prevents lost updates in concurrent scenarios
-- **Automatic Retry** - Handles temporary lock failures gracefully
-- **Transaction Isolation** - Ensures ACID compliance for all operations
+### Password Requirements
+- Minimum 8 characters
+- At least one uppercase letter
+- At least one lowercase letter
+- At least one number
+- At least one special character (@#$%^&+=!*._-)
 
 ## 🧪 Testing
 
-### Run Tests
 ```bash
-# Run all tests
+# Run all tests (uses H2 in-memory database)
 mvn test
 
 # Run specific test class
-mvn test -Dtest=TransactionServiceTest
+mvn test -Dtest=AccountControllerIT
 
-# Run integration tests
-mvn test -Dtest=*IT
+# Run with verbose output
+mvn test -X
 ```
 
 ### Test Coverage
-- **Unit Tests** - Service layer business logic
-- **Integration Tests** - End-to-end API testing
-- **Concurrent Testing** - Multi-threaded transaction scenarios
-- **Database Tests** - Repository layer validation
+- **Unit Tests** - Service layer with Mockito
+- **Integration Tests** - Full API testing with MockMvc
+- **Concurrency Tests** - Simultaneous transaction scenarios
+- **Security Tests** - Authentication and authorization
 
-## 🏗️ Architecture Roadmap
+## ⚙️ Configuration
 
-### Current Implementation ✅
-- RESTful API with Spring Boot
-- PostgreSQL database integration
-- Concurrent transaction handling
-- Comprehensive input validation
-- Docker containerization
+### Development (application.properties)
+```properties
+# Database
+spring.datasource.url=jdbc:postgresql://localhost:5433/postgres
+spring.datasource.username=postgres
+spring.datasource.password=1234
 
-### Planned Enhancements 🚧
-- **JWT Authentication** - Secure user authentication and authorization
-- **Multi-Module Architecture** - Modular design for scalability
-- **Kafka Integration** - Event-driven architecture for real-time processing
-- **Audit Logging** - Complete transaction audit trail
-- **API Rate Limiting** - Request throttling for security
-- **Monitoring & Metrics** - Prometheus/Grafana integration
+# JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# JWT (24 hours expiration)
+jwt.secret=${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+jwt.expiration=86400000
+```
+
+### Test (application.properties)
+```properties
+spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+spring.datasource.driver-class-name=org.h2.Driver
+spring.jpa.hibernate.ddl-auto=create-drop
+
+jwt.secret=${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+jwt.expiration=3600000
+```
 
 ## 🐳 Docker Support
 
-### Development Environment
 ```bash
-# Start all services
+# Start PostgreSQL
 docker-compose up -d
 
 # View logs
 docker-compose logs -f
 
-# Stop services
+# Stop
 docker-compose down
 ```
 
-### Production Deployment
-```dockerfile
-# Build production image
-docker build -t money-transfer-api:latest .
-
-# Run production container
-docker run -p 8080:8080 \
-  -e SPRING_PROFILES_ACTIVE=prod \
-  money-transfer-api:latest
+### docker-compose.yml
+```yaml
+services:
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    ports:
+      - "5433:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
 ```
 
-## 📊 Performance Considerations
+## 📊 Concurrency Handling
 
-### Database Optimization
-- **Connection Pooling** - HikariCP for optimal database connections
-- **Query Optimization** - JPA queries optimized for performance
-- **Index Strategy** - Strategic indexing on frequently queried fields
+The application uses **optimistic locking** with automatic retry:
 
-### Concurrency Handling
-- **Optimistic Locking** - High concurrency with minimal blocking
-- **Retry Mechanisms** - Graceful handling of temporary conflicts
-- **Transaction Isolation** - READ_COMMITTED for optimal performance
+```java
+@Retryable(
+    retryFor = {CannotAcquireLockException.class, 
+                OptimisticLockingFailureException.class, 
+                OptimisticLockException.class},
+    backoff = @Backoff(delay = 1000)
+)
+@Transactional(isolation = Isolation.READ_COMMITTED)
+public Transaction createNewTransaction(Transaction transaction) { ... }
+```
 
-## 🛡️ Security Features
+- `@Version` annotation on entities for optimistic locking
+- `READ_COMMITTED` isolation level for performance
+- Automatic retry with 1-second backoff on conflicts
 
-### Current Security
-- **Input Validation** - Comprehensive request validation
-- **Error Handling** - Secure error responses without information leakage
-- **SQL Injection Prevention** - JPA/Hibernate parameterized queries
+## 🗂️ Project Structure
 
-### Planned Security Enhancements
-- **JWT Authentication** - Stateless authentication tokens
-- **Role-Based Access Control** - Fine-grained permissions
-- **Rate Limiting** - API request throttling
-- **Audit Logging** - Complete security event tracking
+```
+src/
+├── main/java/bank/money/transfer/
+│   ├── controllers/
+│   │   ├── AccountController.java          # Interface
+│   │   ├── TransactionController.java      # Interface
+│   │   └── impl/
+│   │       ├── AccountControllerImpl.java
+│   │       └── TransactionControllerImpl.java
+│   ├── domain/
+│   │   ├── dto/
+│   │   │   ├── Account.java
+│   │   │   └── Transaction.java
+│   │   └── entities/
+│   │       ├── AccountEntity.java
+│   │       └── TransactionEntity.java
+│   ├── repositories/
+│   │   ├── AccountRepository.java
+│   │   └── TransactionRepository.java
+│   ├── services/
+│   │   ├── AccountService.java             # Interface
+│   │   ├── TransactionService.java         # Interface
+│   │   └── implementation/
+│   │       ├── AccountServiceImplementation.java
+│   │       └── TransactionServiceImplementation.java
+│   ├── security/
+│   │   ├── auth/
+│   │   │   ├── AuthenticationController.java
+│   │   │   ├── AuthenticationService.java
+│   │   │   ├── AuthenticationRequest.java
+│   │   │   ├── AuthenticationResponse.java
+│   │   │   └── RegisterRequest.java
+│   │   ├── config/
+│   │   │   ├── ApplicationConfig.java
+│   │   │   ├── JwtService.java
+│   │   │   ├── JWTAuthenticationFilter.java
+│   │   │   ├── SecurityConfiguration.java
+│   │   │   └── OpenApiConfig.java
+│   │   └── user/
+│   │       ├── User.java
+│   │       ├── UserRepository.java
+│   │       └── Role.java
+│   ├── exceptions/
+│   │   ├── GlobalExceptionHandler.java
+│   │   └── security/AuthenticationExceptionHandler.java
+│   └── util/
+│       └── Currency.java
+└── test/
+    └── java/bank/money/transfer/
+        ├── controllers/
+        │   ├── AccountControllerIT.java
+        │   ├── TransactionControllerIT.java
+        │   └── security/
+        │       ├── TestSecurityIT.java
+        │       └── AuthHelperUtils.java
+        └── services/implementation/
+            ├── AccountServiceImplementationTest.java
+            └── TransactionServiceImplementationTest.java
+```
+
+## 🛠️ Tech Stack
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Java | 17 | Runtime |
+| Spring Boot | 3.4.4 | Framework |
+| Spring Security | - | Authentication/Authorization |
+| Spring Data JPA | - | Data persistence |
+| PostgreSQL | Latest | Production database |
+| H2 | - | Test database |
+| JWT (jjwt) | 0.11.5 | Token generation/validation |
+| Lombok | - | Boilerplate reduction |
+| SpringDoc OpenAPI | 2.8.6 | API documentation |
+| Hibernate Validator | 8.0.1 | Bean validation |
+
+## 🚧 Roadmap
+
+- [ ] Refresh token implementation
+- [ ] Multi-module Maven architecture
+- [ ] Currency exchange rates integration
+- [ ] Audit logging with Spring AOP
+- [ ] API rate limiting
+- [ ] Prometheus/Grafana monitoring
+- [ ] Kubernetes deployment configs
 
 ## 🤝 Contributing
 
-### Development Workflow
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-### Code Standards
-- Follow Google Java Style Guide
-- Maintain test coverage above 80%
-- Include comprehensive documentation
-- Add integration tests for new endpoints
+## 📄 License
 
-## 📋 Environment Configuration
-
-### Development
-```properties
-# Database Configuration
-spring.datasource.url=jdbc:postgresql://localhost:5433/postgres
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-
-# Logging
-logging.level.root=INFO
-logging.level.com.bankapi=DEBUG
-```
-
-### Production
-```properties
-# Database Configuration
-spring.datasource.url=${DATABASE_URL}
-spring.jpa.hibernate.ddl-auto=validate
-spring.jpa.show-sql=false
-
-# Security
-server.ssl.enabled=true
-management.endpoints.web.exposure.include=health,info
-```
-
-## 📈 Monitoring & Health Checks
-
-### Health Endpoints
-- `GET /actuator/health` - Application health status
-- `GET /actuator/info` - Application information
-- `GET /actuator/metrics` - Application metrics
-
-### Database Health
-```bash
-# Check database connectivity
-curl http://localhost:8080/actuator/health/db
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
