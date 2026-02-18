@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
         Class<?> targetType = ex.getTargetType();
         String message;
         if (targetType != null) {
-            if (targetType.getSimpleName().equals("Currency")) {
+            if (targetType == Currency.class) {
                 String availableCurrencies = Arrays.stream(Currency.values())
                         .map(Enum::name)
                         .collect(Collectors.joining(", "));

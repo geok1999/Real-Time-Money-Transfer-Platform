@@ -28,9 +28,9 @@ public class TransactionControllerImpl implements TransactionController {
     public ResponseEntity<?> createTransaction(@RequestBody @Valid final Transaction transaction){
         try{
             final Transaction newTransaction=transactionService.createNewTransaction(transaction);
-            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("Message: ","Transaction was completed successfully","Transaction: ",newTransaction));
+            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message","Transaction was completed successfully","transaction",newTransaction));
         }catch (IllegalArgumentException | AccountNotFoundException e){
-            return ResponseEntity.badRequest().body(Map.of("Error: ",e.getMessage()));
+            return ResponseEntity.badRequest().body(Map.of("error",e.getMessage()));
         }
     }
 

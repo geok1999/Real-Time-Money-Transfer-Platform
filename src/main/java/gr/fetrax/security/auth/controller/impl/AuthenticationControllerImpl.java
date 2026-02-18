@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class AuthenticationControllerImple implements AuthenticationController {
+public class AuthenticationControllerImpl implements AuthenticationController {
 
     private final AuthenticationService authenticationService;
 

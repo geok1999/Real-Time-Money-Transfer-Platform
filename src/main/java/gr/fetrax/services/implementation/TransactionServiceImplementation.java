@@ -81,9 +81,6 @@ public class TransactionServiceImplementation implements TransactionService {
         final TransactionEntity savedTransaction = transactionRepository.save(transactionEntity);
 
         return transactionEntityToTransaction(savedTransaction);
-
-
-          //  throw new IllegalArgumentException("Transaction failed due to a concurrent modification. Please try again later.", e);
     }
 
     @Override
