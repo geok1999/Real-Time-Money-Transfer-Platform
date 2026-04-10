@@ -6,10 +6,8 @@ import org.springframework.retry.annotation.EnableRetry;
 
 @SpringBootApplication
 @EnableRetry
-public class TransferMoneyApplication {
-
+public class FetraX {
     public static void main(String[] args) {
-        SpringApplication.run(TransferMoneyApplication.class, args);
+        SpringApplication.run(FetraX.class, args);
     }
-
 }

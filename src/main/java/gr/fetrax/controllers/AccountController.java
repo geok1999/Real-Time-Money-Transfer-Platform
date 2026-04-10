@@ -397,6 +397,6 @@ public interface AccountController {
             )
     })
     @GetMapping(path = "/account")
-    public ResponseEntity<List<Account>> ListAllAccounts();
+    public ResponseEntity<List<Account>> listAllAccounts();
 
 }

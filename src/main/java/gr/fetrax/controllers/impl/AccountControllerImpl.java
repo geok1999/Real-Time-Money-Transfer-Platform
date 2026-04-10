@@ -43,7 +43,7 @@ public class AccountControllerImpl implements AccountController {
     }
 
     @Override
-    public ResponseEntity<List<Account>> ListAllAccounts(){
+    public ResponseEntity<List<Account>> listAllAccounts(){
         return new ResponseEntity<>(accountService.listAccounts(),HttpStatus.OK);
     }
 
