@@ -10,8 +10,13 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(InvalidFormatException.class)
     public ResponseEntity<?> handleInvalidFormat(InvalidFormatException ex) {
@@ -29,6 +34,10 @@ public class GlobalExceptionHandler {
         } else {
             message = "Invalid value: " + ex.getValue();
         }
+
+        // Log the bad request so it appears in Loki
+        log.warn("Bad request - {}", message);
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 }

@@ -30,6 +30,7 @@
     </scm>
     <properties>
         <java.version>17</java.version>
+        <loki4j.version>1.5.2</loki4j.version>
     </properties>
     <dependencies>
         <dependency>
@@ -111,6 +112,42 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!--
+            Prometheus registry: formats metrics in Prometheus text format.
+            Prometheus scrapes /actuator/prometheus produced by this.
+        -->
+<!--        <dependency>-->
+<!--            <groupId>io.micrometer</groupId>-->
+<!--            <artifactId>micrometer-registry-prometheus</artifactId>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
+        </dependency>
+
+        <!--
+            Loki4j Logback appender: ships every log line written by Logback
+            directly to Loki's HTTP push API - no file tailing agent needed.
+            Configured by: src/main/resources/logback-spring.xml
+            Version pinned explicitly because it is not in the Spring Boot BOM.
+        -->
+        <dependency>
+            <groupId>com.github.loki4j</groupId>
+            <artifactId>loki-logback-appender</artifactId>
+            <version>${loki4j.version}</version>
         </dependency>
     </dependencies>
 
